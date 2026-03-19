@@ -4,6 +4,7 @@ from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from src.account.models import User
 
 
 app = Flask(__name__)
@@ -21,3 +22,9 @@ from src.cores.views import core_bp
 # registering them
 app.register_blueprint(accounts_bp)
 app.register_blueprint(core_bp)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.filter(User.id == int(user_id)).first()
+

@@ -20,4 +20,5 @@ class BaseTetsCase(TestCase):
     def tearDown(self):
         db.session.remove()
         db.drop_all()
-        testdb_path = 
+        testdb_path = os.path.join("src", "testdb.sqlite")
+        os.remove(testdb_path)

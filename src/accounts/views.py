@@ -1,4 +1,4 @@
-from flask import Blueprint,flash, redirect, render_template, url_for, request
+from flask import Blueprint,flash, redirect, render_template, url_for, request, logout_user, login_required
 from flask_login import login_user
 
 from src import db
@@ -40,3 +40,10 @@ def login():
             flash("Invalid email qand/or password", "danger")
             return render_template("accounts/login.html", form=form)
     return render_template("accounts/login", form=form)
+
+@accounts_bp.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    flash("You were logged out succesfully!!", "success")
+    return redirect(url_for("accounts.login"))
